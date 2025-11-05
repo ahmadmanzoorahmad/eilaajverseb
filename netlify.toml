@@ -1,0 +1,30 @@
+[build]
+  publish = "dist"
+  command = "npm run build"
+
+# IMPORTANT: Frontend-only static deployment configuration
+# See DEPLOYMENT.md for complete deployment guide
+#
+# This netlify.toml deploys ONLY the frontend to Netlify.
+# The Express backend (server/index.js) must be deployed separately.
+#
+# Quick Setup:
+# 1. Deploy backend to Render/Railway/Heroku (see DEPLOYMENT.md)
+# 2. Update vite.config.ts proxy or add VITE_API_URL environment variable
+# 3. Guest mode works without backend; full features require backend deployment
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[build.environment]
+  NODE_VERSION = "20"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
